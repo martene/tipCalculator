@@ -13,9 +13,21 @@ class ViewController: UIViewController {
    @IBOutlet weak var tipLabel: UILabel!
    @IBOutlet weak var totalLabel: UILabel!
    @IBOutlet weak var billField: UITextField!
-   @IBOutlet weak var tipControl: UISegmentedControl!
 
+   @IBOutlet weak var tipCtrl: UISegmentedControl!
 
+   override func viewWillAppear(animated: Bool) {
+      super.viewWillAppear(animated)
+
+      print("initializing tip controller... ")
+
+      let defTip1 = "15"
+      let defTip2 = "20"
+      let defTip3 = "25"
+   tipCtrl.setTitle(NSUserDefaults.standardUserDefaults().stringForKey("tip1") ?? defTip1, forSegmentAtIndex: 0)
+      tipCtrl.setTitle(NSUserDefaults.standardUserDefaults().stringForKey("tip2") ?? defTip2 + "%", forSegmentAtIndex: 1)
+      tipCtrl.setTitle(NSUserDefaults.standardUserDefaults().stringForKey("tip3") ?? defTip3 + "%", forSegmentAtIndex: 2)
+   }
 
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -33,12 +45,15 @@ class ViewController: UIViewController {
    }
 
 
+   func pc (percentage: String) -> Double {
+      return (Double(percentage.stringByReplacingOccurrencesOfString("%", withString: ""))! / 100)
+   }
+
    @IBAction func calculateTip(sender: AnyObject) {
 
-      let tipPercents = [0.18, 0.2, 0.25]
-
       let bill = Double(billField.text!) ?? 0
-      let tip = bill * tipPercents[tipControl.selectedSegmentIndex]
+
+      let tip = bill * pc(tipCtrl.titleForSegmentAtIndex(tipCtrl.selectedSegmentIndex)!)
       let total = bill + tip
 
       tipLabel.text = String(format: "$%.2f", tip)
