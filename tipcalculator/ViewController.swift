@@ -24,7 +24,7 @@ class ViewController: UIViewController {
       let defTip1 = "15"
       let defTip2 = "20"
       let defTip3 = "25"
-   tipCtrl.setTitle(NSUserDefaults.standardUserDefaults().stringForKey("tip1") ?? defTip1, forSegmentAtIndex: 0)
+      tipCtrl.setTitle(NSUserDefaults.standardUserDefaults().stringForKey("tip1") ?? defTip1, forSegmentAtIndex: 0)
       tipCtrl.setTitle(NSUserDefaults.standardUserDefaults().stringForKey("tip2") ?? defTip2 + "%", forSegmentAtIndex: 1)
       tipCtrl.setTitle(NSUserDefaults.standardUserDefaults().stringForKey("tip3") ?? defTip3 + "%", forSegmentAtIndex: 2)
    }
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
    }
 
    @IBAction func calculateTip(sender: AnyObject) {
-
+      print("click on ... \(sender.currentTitle)")
       let bill = Double(billField.text!) ?? 0
 
       let tip = bill * pc(tipCtrl.titleForSegmentAtIndex(tipCtrl.selectedSegmentIndex)!)
